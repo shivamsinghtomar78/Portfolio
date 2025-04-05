@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shivam Singh | AI Developer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+</head>
+<body class="dark-theme">
+    <div id="particles-js"></div>
+    <div class="theme-toggle">
+        <i class="fas fa-moon"></i>
+        <i class="fas fa-sun"></i>
+    </div>
+    
+    <header>
+        <div class="container">
+            <div class="profile">
+                <div class="profile-img-container">
+                    <img src="{{ url_for('static', filename='images/picofme.png') }}" alt="Shivam Singh" class="profile-img">
+                    <div class="profile-overlay"></div>
+                </div>
+                <h1 class="typewriter">SHIVAM SINGH</h1>
+                <p class="typing-text">Computer Science with AI | Developer | Aspiring Leader</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#about"><span>About</span></a></li>
+                    <li><a href="#education"><span>Education</span></a></li>
+                    <li><a href="#experience"><span>Experience</span></a></li>
+                    <li><a href="#projects"><span>Projects</span></a></li>
+                    <li><a href="#skills"><span>Skills</span></a></li>
+                    <li><a href="#contact"><span>Contact</span></a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="about" class="section">
+            <div class="container">
+                <h2>About Me</h2>
+                <p>I'm a passionate Computer Science student specializing in Artificial Intelligence at Maharaja Agrasen Institute Of Technology. I love building innovative solutions using cutting-edge technologies and am currently part of the prestigious Aspire Leaders Program.</p>
+                <div class="contact-info">
+                    <p><i class="fas fa-map-marker-alt"></i> New Delhi, India</p>
+                    <p><i class="fas fa-phone"></i> 7888984624</p>
+                    <p><i class="fas fa-envelope"></i> ss93134041@gmail.com</p>
+                </div>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/shivam-singh-81b160280" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/shivamsinghtomar78" target="_blank"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="section">
+            <div class="container">
+                <h2>Education</h2>
+                <div class="education-item">
+                    <h3>Maharaja Agrasen Institute Of Technology</h3>
+                    <p class="date">Sep. 2023 – May 2027</p>
+                    <p>Bachelor of Technology in Computer Science with Artificial Intelligence</p>
+                    <p>New Delhi, Delhi</p>
+                </div>
+                <h3>Relevant Coursework</h3>
+                <ul class="coursework">
+                    <li>Data Structures</li>
+                    <li>Database Management</li>
+                    <li>Machine Learning</li>
+                    <li>Full stack Development</li>
+                    <li>Generative AI</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="experience" class="section">
+            <div class="container">
+                <h2>Experience</h2>
+                <div class="experience-item">
+                    <h3>AICTE Internship on AI: Transformative Learning with TechSaksham</h3>
+                    <p class="date">Feb 2025 – Mar 2025</p>
+                    <p class="company">Microsoft & SAP | AICTE | Edunet</p>
+                    <p class="position">Software Engineer Intern | Delhi, India</p>
+                    <ul>
+                        <li>Developed an AI-based project prototype under Microsoft & SAP-AICTE mentorship.</li>
+                        <li>Engaged in collaborative learning, industry-led sessions, and project-based training.</li>
+                        <li>Earned certifications and presented the project to industry experts at a regional showcase.</li>
+                    </ul>
+                </div>
+                <div class="experience-item">
+                    <h3>Aspire Leaders Program 2025</h3>
+                    <p class="date">Jan 2025 – Present</p>
+                    <p class="company">Aspire Institute | Delhi, India</p>
+                    <ul>
+                        <li>Selected for a prestigious global leadership program focused on personal and professional growth.</li>
+                        <li>Engaged in interactive modules, mentorship, and community-driven learning experiences.</li>
+                        <li>Developed leadership skills through structured coursework, workshops, and peer collaboration.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section">
+            <div class="container">
+                <h2>Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <h3>Fake News Detection Chrome Extension</h3>
+                        <p>A Chrome extension that analyzes news articles in real-time combining local text analysis with backend verification.</p>
+                        <p>Helps users identify sensationalism, lack of citations, and date of publish.</p>
+                    </div>
+                    <div class="project-card">
+                        <h3>Movie Matrix 2.0 – Cyberpunk Movie Recommendation System</h3>
+                        <p>Python | Streamlit | NLP | TMDB API</p>
+                        <p>Built a content-based movie recommendation system using NLP, cosine similarity, and Porter stemming.</p>
+                        <p>Designed a cyberpunk-themed UI with real-time TMDB poster integration.</p>
+                    </div>
+                    <div class="project-card">
+                        <h3>Fake News Detection System</h3>
+                        <p>Flask | Scikit-Learn | JavaScript/HTML/CSS</p>
+                        <p>Developed a machine learning-powered web app to detect fake news in real-time.</p>
+                        <p>Implemented Flask backend with Scikit-Learn model for text classification.</p>
+                    </div>
+                    <div class="project-card">
+                        <h3>Student Placement Prediction System</h3>
+                        <p>Streamlit | Scikit-Learn | Python | Pickle</p>
+                        <p>Built a web app to predict student placement likelihood based on CGPA and IQ.</p>
+                        <p>Integrated a scaler for input normalization and deployed using Streamlit.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="section">
+            <div class="container">
+                <h2>Technical Skills</h2>
+                <div class="skills-container">
+                    <div class="skill-category">
+                        <h3>Languages</h3>
+                        <ul>
+                            <li>Python</li>
+                            <li>Java</li>
+                            <li>C</li>
+                            <li>HTML/CSS</li>
+                            <li>JavaScript</li>
+                            <li>SQL</li>
+                            <li>C++</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Developer Tools</h3>
+                        <ul>
+                            <li>VS Code</li>
+                            <li>PyCharm</li>
+                            <li>Google Colab</li>
+                            <li>IntelliJ IDEA</li>
+                            <li>Postman</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Technologies/Frameworks</h3>
+                        <ul>
+                            <li>Streamlit</li>
+                            <li>Flask</li>
+                            <li>Spring-Boot</li>
+                            <li>Langchain</li>
+                            <li>Huggingface</li>
+                            <li>Scikit-Learn</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="achievements" class="section">
+            <div class="container">
+                <h2>Achievements</h2>
+                <div class="achievement-item">
+                    <h3>Finalist HackTu 6.0</h3>
+                    <p class="date">Feb 2025</p>
+                    <p>Developed a Chrome extension for real-time fake news detection using HTML, CSS, JavaScript, and Python.</p>
+                </div>
+                <div class="achievement-item">
+                    <h3>OPEN SOURCE CONTRIBUTOR, Girl Script Summer of Code</h3>
+                    <p class="date">May 2024 – Aug 2024</p>
+                    <p>Contributed to real-world projects, enhancing my coding skills and understanding of collaborative development dynamics.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section">
+            <div class="container">
+                <h2>Contact Me</h2>
+                <form id="contact-form">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Shivam Singh. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Add particle.js library -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

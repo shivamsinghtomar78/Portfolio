@@ -6,51 +6,172 @@
     <title>Shivam Singh | AI Developer</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
 </head>
 <body class="dark-theme">
-    <div id="particles-js"></div>
-    <div class="theme-toggle">
-        <i class="fas fa-moon"></i>
-        <i class="fas fa-sun"></i>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <span class="loading-text">SHIVAM</span>
+                <div class="loading-bar"></div>
+            </div>
+        </div>
     </div>
     
-    <header>
-        <div class="container">
-            <div class="profile">
-                <div class="profile-img-container">
-                    <img src="{{ url_for('static', filename='images/picofme.png') }}" alt="Shivam Singh" class="profile-img">
-                    <div class="profile-overlay"></div>
-                </div>
-                <h1 class="typewriter">SHIVAM SINGH</h1>
-                <p class="typing-text">Computer Science with AI | Developer | Aspiring Leader</p>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#about"><span>About</span></a></li>
-                    <li><a href="#education"><span>Education</span></a></li>
-                    <li><a href="#experience"><span>Experience</span></a></li>
-                    <li><a href="#projects"><span>Projects</span></a></li>
-                    <li><a href="#skills"><span>Skills</span></a></li>
-                    <li><a href="#contact"><span>Contact</span></a></li>
-                </ul>
-            </nav>
+    <!-- Background Elements -->
+    <div class="bg-gradient-mesh"></div>
+    <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+    </div>
+    
+    <!-- Scroll Progress -->
+    <div class="scroll-progress"></div>
+    
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <div class="toggle-inner">
+            <i class="fas fa-moon"></i>
+            <i class="fas fa-sun"></i>
         </div>
-    </header>
+    </div>
+    
+    <!-- Floating Navigation -->
+    <nav class="floating-nav">
+        <div class="nav-container">
+            <div class="nav-indicator"></div>
+            <ul>
+                <li><a href="#hero" data-section="hero"><span>Home</span></a></li>
+                <li><a href="#about" data-section="about"><span>About</span></a></li>
+                <li><a href="#experience" data-section="experience"><span>Experience</span></a></li>
+                <li><a href="#projects" data-section="projects"><span>Projects</span></a></li>
+                <li><a href="#skills" data-section="skills"><span>Skills</span></a></li>
+                <li><a href="#contact" data-section="contact"><span>Contact</span></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <div class="profile-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="profile-img-container">
+                        <img src="{{ url_for('static', filename='images/picofme.png') }}" alt="Shivam Singh" class="profile-img">
+                        <div class="profile-glow"></div>
+                    </div>
+                </div>
+                
+                <div class="hero-text">
+                    <h1 class="hero-name" data-aos="fade-up" data-aos-delay="400">
+                        <span class="name-letter">S</span>
+                        <span class="name-letter">H</span>
+                        <span class="name-letter">I</span>
+                        <span class="name-letter">V</span>
+                        <span class="name-letter">A</span>
+                        <span class="name-letter">M</span>
+                        <span class="name-space"></span>
+                        <span class="name-letter">S</span>
+                        <span class="name-letter">I</span>
+                        <span class="name-letter">N</span>
+                        <span class="name-letter">G</span>
+                        <span class="name-letter">H</span>
+                    </h1>
+                    
+                    <div class="hero-tagline" data-aos="fade-up" data-aos-delay="600">
+                        <span class="typewriter-text"></span>
+                        <span class="cursor-blink">|</span>
+                    </div>
+                    
+                    <div class="hero-buttons" data-aos="fade-up" data-aos-delay="800">
+                        <button class="btn-primary magnetic-btn" data-text="View Projects">
+                            <span>View Projects</span>
+                            <div class="btn-ripple"></div>
+                        </button>
+                        <button class="btn-secondary magnetic-btn" data-text="Contact Me">
+                            <span>Contact Me</span>
+                            <div class="btn-ripple"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <main>
         <section id="about" class="section">
             <div class="container">
-                <h2>About Me</h2>
-                <p>I'm a passionate Computer Science student specializing in Artificial Intelligence at Maharaja Agrasen Institute Of Technology. I love building innovative solutions using cutting-edge technologies and am currently part of the prestigious Aspire Leaders Program.</p>
-                <div class="contact-info">
-                    <p><i class="fas fa-map-marker-alt"></i> New Delhi, India</p>
-                    <p><i class="fas fa-phone"></i> 7888984624</p>
-                    <p><i class="fas fa-envelope"></i> ss93134041@gmail.com</p>
-                </div>
-                <div class="social-links">
-                    <a href="https://www.linkedin.com/in/shivam-singh-81b160280" target="_blank"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://github.com/shivamsinghtomar78" target="_blank"><i class="fab fa-github"></i></a>
+                <h2 class="section-title" data-aos="fade-up">
+                    <span class="title-text">About Me</span>
+                    <div class="title-glow"></div>
+                </h2>
+                
+                <div class="about-content">
+                    <div class="about-text" data-aos="fade-right" data-aos-delay="200">
+                        <div class="glass-card">
+                            <p class="about-description">
+                                I'm a passionate Computer Science student specializing in Artificial Intelligence at 
+                                <span class="highlight">Maharaja Agrasen Institute Of Technology</span>. 
+                                I love building innovative solutions using cutting-edge technologies and am currently 
+                                part of the prestigious <span class="highlight">Aspire Leaders Program</span>.
+                            </p>
+                            
+                            <div class="contact-info">
+                                <div class="contact-item" data-aos="fade-up" data-aos-delay="300">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>New Delhi, India</span>
+                                </div>
+                                <div class="contact-item" data-aos="fade-up" data-aos-delay="400">
+                                    <i class="fas fa-phone"></i>
+                                    <span>7888984624</span>
+                                </div>
+                                <div class="contact-item" data-aos="fade-up" data-aos-delay="500">
+                                    <i class="fas fa-envelope"></i>
+                                    <span>ss93134041@gmail.com</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="about-stats" data-aos="fade-left" data-aos-delay="400">
+                        <div class="stats-grid">
+                            <div class="stat-item glass-card">
+                                <div class="stat-number" data-count="15">0</div>
+                                <div class="stat-label">Projects</div>
+                            </div>
+                            <div class="stat-item glass-card">
+                                <div class="stat-number" data-count="2">0</div>
+                                <div class="stat-label">Years Experience</div>
+                            </div>
+                            <div class="stat-item glass-card">
+                                <div class="stat-number" data-count="8">0</div>
+                                <div class="stat-label">Technologies</div>
+                            </div>
+                            <div class="stat-item glass-card">
+                                <div class="stat-number" data-count="100">0</div>
+                                <div class="stat-label">Commits</div>
+                            </div>
+                        </div>
+                        
+                        <div class="social-links">
+                            <a href="https://www.linkedin.com/in/shivam-singh-81b160280" target="_blank" class="social-link magnetic-btn">
+                                <i class="fab fa-linkedin"></i>
+                                <span class="social-tooltip">LinkedIn</span>
+                            </a>
+                            <a href="https://github.com/shivamsinghtomar78" target="_blank" class="social-link magnetic-btn">
+                                <i class="fab fa-github"></i>
+                                <span class="social-tooltip">GitHub</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -104,30 +225,139 @@
 
         <section id="projects" class="section">
             <div class="container">
-                <h2>Projects</h2>
+                <h2 class="section-title" data-aos="fade-up">
+                    <span class="title-text">Featured Projects</span>
+                    <div class="title-glow"></div>
+                </h2>
+                
+                <div class="projects-filter" data-aos="fade-up" data-aos-delay="200">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="ai">AI/ML</button>
+                    <button class="filter-btn" data-filter="web">Web Dev</button>
+                    <button class="filter-btn" data-filter="extension">Extensions</button>
+                </div>
+                
                 <div class="projects-grid">
-                    <div class="project-card">
-                        <h3>Fake News Detection Chrome Extension</h3>
-                        <p>A Chrome extension that analyzes news articles in real-time combining local text analysis with backend verification.</p>
-                        <p>Helps users identify sensationalism, lack of citations, and date of publish.</p>
+                    <div class="project-card glass-card" data-category="ai extension" data-aos="fade-up" data-aos-delay="300">
+                        <div class="project-header">
+                            <div class="project-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="project-status">
+                                <span class="status-badge featured">Featured</span>
+                            </div>
+                        </div>
+                        <h3 class="project-title">Fake News Detection Chrome Extension</h3>
+                        <p class="project-description">
+                            A Chrome extension that analyzes news articles in real-time combining local text analysis 
+                            with backend verification. Helps users identify sensationalism, lack of citations, and date of publish.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Chrome API</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">NLP</span>
+                            <span class="tech-tag">ML</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link magnetic-btn">
+                                <i class="fas fa-external-link-alt"></i>
+                                <span>Live Demo</span>
+                            </a>
+                            <a href="#" class="project-link magnetic-btn">
+                                <i class="fab fa-github"></i>
+                                <span>Code</span>
+                            </a>
+                        </div>
                     </div>
-                    <div class="project-card">
-                        <h3>Movie Matrix 2.0 – Cyberpunk Movie Recommendation System</h3>
-                        <p>Python | Streamlit | NLP | TMDB API</p>
-                        <p>Built a content-based movie recommendation system using NLP, cosine similarity, and Porter stemming.</p>
-                        <p>Designed a cyberpunk-themed UI with real-time TMDB poster integration.</p>
+                    
+                    <div class="project-card glass-card" data-category="ai web" data-aos="fade-up" data-aos-delay="400">
+                        <div class="project-header">
+                            <div class="project-icon">
+                                <i class="fas fa-film"></i>
+                            </div>
+                            <div class="project-status">
+                                <span class="status-badge new">New</span>
+                            </div>
+                        </div>
+                        <h3 class="project-title">Movie Matrix 2.0 – Cyberpunk Recommendation System</h3>
+                        <p class="project-description">
+                            Built a content-based movie recommendation system using NLP, cosine similarity, and Porter stemming.
+                            Designed a cyberpunk-themed UI with real-time TMDB poster integration.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Streamlit</span>
+                            <span class="tech-tag">NLP</span>
+                            <span class="tech-tag">TMDB API</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link magnetic-btn">
+                                <i class="fas fa-external-link-alt"></i>
+                                <span>Live Demo</span>
+                            </a>
+                            <a href="#" class="project-link magnetic-btn">
+                                <i class="fab fa-github"></i>
+                                <span>Code</span>
+                            </a>
+                        </div>
                     </div>
-                    <div class="project-card">
-                        <h3>Fake News Detection System</h3>
-                        <p>Flask | Scikit-Learn | JavaScript/HTML/CSS</p>
-                        <p>Developed a machine learning-powered web app to detect fake news in real-time.</p>
-                        <p>Implemented Flask backend with Scikit-Learn model for text classification.</p>
+                    
+                    <div class="project-card glass-card" data-category="ai web" data-aos="fade-up" data-aos-delay="500">
+                        <div class="project-header">
+                            <div class="project-icon">
+                                <i class="fas fa-search"></i>
+                            </div>
+                        </div>
+                        <h3 class="project-title">Fake News Detection System</h3>
+                        <p class="project-description">
+                            Developed a machine learning-powered web app to detect fake news in real-time.
+                            Implemented Flask backend with Scikit-Learn model for text classification.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Flask</span>
+                            <span class="tech-tag">Scikit-Learn</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">HTML/CSS</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link magnetic-btn">
+                                <i class="fas fa-external-link-alt"></i>
+                                <span>Live Demo</span>
+                            </a>
+                            <a href="#" class="project-link magnetic-btn">
+                                <i class="fab fa-github"></i>
+                                <span>Code</span>
+                            </a>
+                        </div>
                     </div>
-                    <div class="project-card">
-                        <h3>Student Placement Prediction System</h3>
-                        <p>Streamlit | Scikit-Learn | Python | Pickle</p>
-                        <p>Built a web app to predict student placement likelihood based on CGPA and IQ.</p>
-                        <p>Integrated a scaler for input normalization and deployed using Streamlit.</p>
+                    
+                    <div class="project-card glass-card" data-category="ai web" data-aos="fade-up" data-aos-delay="600">
+                        <div class="project-header">
+                            <div class="project-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                        </div>
+                        <h3 class="project-title">Student Placement Prediction System</h3>
+                        <p class="project-description">
+                            Built a web app to predict student placement likelihood based on CGPA and IQ.
+                            Integrated a scaler for input normalization and deployed using Streamlit.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Streamlit</span>
+                            <span class="tech-tag">Scikit-Learn</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Pickle</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link magnetic-btn">
+                                <i class="fas fa-external-link-alt"></i>
+                                <span>Live Demo</span>
+                            </a>
+                            <a href="#" class="project-link magnetic-btn">
+                                <i class="fab fa-github"></i>
+                                <span>Code</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -135,40 +365,172 @@
 
         <section id="skills" class="section">
             <div class="container">
-                <h2>Technical Skills</h2>
-                <div class="skills-container">
-                    <div class="skill-category">
-                        <h3>Languages</h3>
-                        <ul>
-                            <li>Python</li>
-                            <li>Java</li>
-                            <li>C</li>
-                            <li>HTML/CSS</li>
-                            <li>JavaScript</li>
-                            <li>SQL</li>
-                            <li>C++</li>
-                        </ul>
+                <h2 class="section-title" data-aos="fade-up">
+                    <span class="title-text">Technical Skills</span>
+                    <div class="title-glow"></div>
+                </h2>
+                
+                <div class="skills-tabs" data-aos="fade-up" data-aos-delay="200">
+                    <button class="skill-tab active" data-tab="languages">Languages</button>
+                    <button class="skill-tab" data-tab="tools">Tools</button>
+                    <button class="skill-tab" data-tab="frameworks">Frameworks</button>
+                </div>
+                
+                <div class="skills-content">
+                    <div class="skill-category active" data-category="languages">
+                        <div class="skills-grid">
+                            <div class="skill-item glass-card" data-aos="fade-up" data-aos-delay="300">
+                                <div class="skill-icon">
+                                    <i class="fab fa-python"></i>
+                                </div>
+                                <h4>Python</h4>
+                                <div class="skill-progress">
+                                    <div class="progress-ring">
+                                        <svg class="progress-svg">
+                                            <circle class="progress-circle-bg" cx="50" cy="50" r="45"></circle>
+                                            <circle class="progress-circle" cx="50" cy="50" r="45" data-percent="90"></circle>
+                                        </svg>
+                                        <div class="progress-text">90%</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="skill-item glass-card" data-aos="fade-up" data-aos-delay="400">
+                                <div class="skill-icon">
+                                    <i class="fab fa-java"></i>
+                                </div>
+                                <h4>Java</h4>
+                                <div class="skill-progress">
+                                    <div class="progress-ring">
+                                        <svg class="progress-svg">
+                                            <circle class="progress-circle-bg" cx="50" cy="50" r="45"></circle>
+                                            <circle class="progress-circle" cx="50" cy="50" r="45" data-percent="85"></circle>
+                                        </svg>
+                                        <div class="progress-text">85%</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="skill-item glass-card" data-aos="fade-up" data-aos-delay="500">
+                                <div class="skill-icon">
+                                    <i class="fab fa-js-square"></i>
+                                </div>
+                                <h4>JavaScript</h4>
+                                <div class="skill-progress">
+                                    <div class="progress-ring">
+                                        <svg class="progress-svg">
+                                            <circle class="progress-circle-bg" cx="50" cy="50" r="45"></circle>
+                                            <circle class="progress-circle" cx="50" cy="50" r="45" data-percent="85"></circle>
+                                        </svg>
+                                        <div class="progress-text">85%</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="skill-item glass-card" data-aos="fade-up" data-aos-delay="600">
+                                <div class="skill-icon">
+                                    <i class="fab fa-html5"></i>
+                                </div>
+                                <h4>HTML/CSS</h4>
+                                <div class="skill-progress">
+                                    <div class="progress-ring">
+                                        <svg class="progress-svg">
+                                            <circle class="progress-circle-bg" cx="50" cy="50" r="45"></circle>
+                                            <circle class="progress-circle" cx="50" cy="50" r="45" data-percent="95"></circle>
+                                        </svg>
+                                        <div class="progress-text">95%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="skill-category">
-                        <h3>Developer Tools</h3>
-                        <ul>
-                            <li>VS Code</li>
-                            <li>PyCharm</li>
-                            <li>Google Colab</li>
-                            <li>IntelliJ IDEA</li>
-                            <li>Postman</li>
-                        </ul>
+                    
+                    <div class="skill-category" data-category="tools">
+                        <div class="skills-grid">
+                            <div class="skill-item glass-card">
+                                <div class="skill-icon">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <h4>VS Code</h4>
+                                <div class="skill-bar">
+                                    <div class="skill-progress-bar" data-width="90%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="skill-item glass-card">
+                                <div class="skill-icon">
+                                    <i class="fas fa-laptop-code"></i>
+                                </div>
+                                <h4>PyCharm</h4>
+                                <div class="skill-bar">
+                                    <div class="skill-progress-bar" data-width="85%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="skill-item glass-card">
+                                <div class="skill-icon">
+                                    <i class="fab fa-google"></i>
+                                </div>
+                                <h4>Google Colab</h4>
+                                <div class="skill-bar">
+                                    <div class="skill-progress-bar" data-width="80%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="skill-item glass-card">
+                                <div class="skill-icon">
+                                    <i class="fas fa-tools"></i>
+                                </div>
+                                <h4>Postman</h4>
+                                <div class="skill-bar">
+                                    <div class="skill-progress-bar" data-width="85%"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="skill-category">
-                        <h3>Technologies/Frameworks</h3>
-                        <ul>
-                            <li>Streamlit</li>
-                            <li>Flask</li>
-                            <li>Spring-Boot</li>
-                            <li>Langchain</li>
-                            <li>Huggingface</li>
-                            <li>Scikit-Learn</li>
-                        </ul>
+                    
+                    <div class="skill-category" data-category="frameworks">
+                        <div class="skills-grid">
+                            <div class="skill-item glass-card">
+                                <div class="skill-icon">
+                                    <i class="fas fa-flask"></i>
+                                </div>
+                                <h4>Flask</h4>
+                                <div class="skill-bar">
+                                    <div class="skill-progress-bar" data-width="85%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="skill-item glass-card">
+                                <div class="skill-icon">
+                                    <i class="fas fa-leaf"></i>
+                                </div>
+                                <h4>Spring Boot</h4>
+                                <div class="skill-bar">
+                                    <div class="skill-progress-bar" data-width="70%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="skill-item glass-card">
+                                <div class="skill-icon">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                                <h4>Scikit-Learn</h4>
+                                <div class="skill-bar">
+                                    <div class="skill-progress-bar" data-width="85%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="skill-item glass-card">
+                                <div class="skill-icon">
+                                    <i class="fas fa-link"></i>
+                                </div>
+                                <h4>Langchain</h4>
+                                <div class="skill-bar">
+                                    <div class="skill-progress-bar" data-width="75%"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -192,31 +554,122 @@
 
         <section id="contact" class="section">
             <div class="container">
-                <h2>Contact Me</h2>
-                <form id="contact-form">
-                    <div class="form-group">
-                        <input type="text" id="name" name="name" placeholder="Your Name" required>
+                <h2 class="section-title" data-aos="fade-up">
+                    <span class="title-text">Get In Touch</span>
+                    <div class="title-glow"></div>
+                </h2>
+                
+                <div class="contact-content">
+                    <div class="contact-info" data-aos="fade-right" data-aos-delay="200">
+                        <div class="glass-card">
+                            <h3>Let's Connect</h3>
+                            <p>Ready to bring your ideas to life? Let's discuss how we can work together.</p>
+                            
+                            <div class="contact-methods">
+                                <div class="contact-method">
+                                    <div class="method-icon">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <div class="method-info">
+                                        <h4>Email</h4>
+                                        <p>ss93134041@gmail.com</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="contact-method">
+                                    <div class="method-icon">
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                    <div class="method-info">
+                                        <h4>Phone</h4>
+                                        <p>+91 7888984624</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="contact-method">
+                                    <div class="method-icon">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                    </div>
+                                    <div class="method-info">
+                                        <h4>Location</h4>
+                                        <p>New Delhi, India</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <input type="email" id="email" name="email" placeholder="Your Email" required>
+                    
+                    <div class="contact-form-container" data-aos="fade-left" data-aos-delay="400">
+                        <form id="contact-form" class="glass-card">
+                            <div class="form-group">
+                                <input type="text" id="name" name="name" required>
+                                <label for="name">Your Name</label>
+                                <div class="input-focus-effect"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="email" id="email" name="email" required>
+                                <label for="email">Your Email</label>
+                                <div class="input-focus-effect"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="text" id="subject" name="subject" required>
+                                <label for="subject">Subject</label>
+                                <div class="input-focus-effect"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <textarea id="message" name="message" required></textarea>
+                                <label for="message">Your Message</label>
+                                <div class="input-focus-effect"></div>
+                            </div>
+                            
+                            <button type="submit" class="submit-btn magnetic-btn">
+                                <span class="btn-text">Send Message</span>
+                                <span class="btn-loading">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                    Sending...
+                                </span>
+                                <span class="btn-success">
+                                    <i class="fas fa-check"></i>
+                                    Sent!
+                                </span>
+                                <div class="btn-ripple"></div>
+                            </button>
+                        </form>
                     </div>
-                    <div class="form-group">
-                        <textarea id="message" name="message" placeholder="Your Message" required></textarea>
-                    </div>
-                    <button type="submit">Send Message</button>
-                </form>
+                </div>
             </div>
         </section>
     </main>
 
-    <footer>
+    <!-- Back to Top Button -->
+    <button class="back-to-top magnetic-btn" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <footer class="glass-footer">
         <div class="container">
-            <p>&copy; 2025 Shivam Singh. All rights reserved.</p>
+            <div class="footer-content">
+                <div class="footer-text">
+                    <p>&copy; 2025 Shivam Singh. Crafted with passion and code.</p>
+                </div>
+                <div class="footer-social">
+                    <a href="https://www.linkedin.com/in/shivam-singh-81b160280" target="_blank" class="social-link magnetic-btn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/shivamsinghtomar78" target="_blank" class="social-link magnetic-btn">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
         </div>
     </footer>
 
-    <!-- Add particle.js library -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

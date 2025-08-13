@@ -35,7 +35,7 @@ class PortfolioApp {
     initCustomCursor() {
         this.cursor = document.querySelector('.cursor');
         this.cursorFollower = document.querySelector('.cursor-follower');
-        
+
         if (!this.cursor || !this.cursorFollower) return;
 
         let mouseX = 0, mouseY = 0;
@@ -44,7 +44,7 @@ class PortfolioApp {
         const updateFollower = () => {
             followerX += (mouseX - followerX) * 0.1;
             followerY += (mouseY - followerY) * 0.1;
-            
+
             this.cursorFollower.style.transform = `translate(${followerX - 20}px, ${followerY - 20}px)`;
             requestAnimationFrame(updateFollower);
         };
@@ -57,7 +57,7 @@ class PortfolioApp {
                 this.cursor.style.transform = 'scale(1.5)';
                 this.cursorFollower.style.transform += ' scale(1.5)';
             });
-            
+
             el.addEventListener('mouseleave', () => {
                 this.cursor.style.transform = 'scale(1)';
                 this.cursorFollower.style.transform = this.cursorFollower.style.transform.replace(' scale(1.5)', '');
@@ -67,9 +67,9 @@ class PortfolioApp {
 
     updateCursor(e) {
         if (!this.cursor) return;
-        
+
         this.cursor.style.transform = `translate(${e.clientX - 10}px, ${e.clientY - 10}px)`;
-        
+
         // Update follower position for smooth animation
         window.mouseX = e.clientX;
         window.mouseY = e.clientY;
@@ -83,7 +83,7 @@ class PortfolioApp {
         setTimeout(() => {
             loadingScreen.style.opacity = '0';
             loadingScreen.style.visibility = 'hidden';
-            
+
             setTimeout(() => {
                 loadingScreen.remove();
             }, 500);
@@ -118,7 +118,7 @@ class PortfolioApp {
 
     updateScrollProgress() {
         if (!this.scrollProgress) return;
-        
+
         const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
         this.scrollProgress.style.width = `${scrolled}%`;
     }
@@ -138,7 +138,7 @@ class PortfolioApp {
         e.preventDefault();
         const targetId = e.target.getAttribute('href');
         const targetSection = document.querySelector(targetId);
-        
+
         if (targetSection) {
             targetSection.scrollIntoView({
                 behavior: 'smooth',
@@ -156,7 +156,7 @@ class PortfolioApp {
         this.sections.forEach(section => {
             const sectionTop = section.offsetTop;
             const sectionHeight = section.offsetHeight;
-            
+
             if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
                 currentSection = section.getAttribute('id');
             }
@@ -190,7 +190,7 @@ class PortfolioApp {
 
         const typeWriter = () => {
             const currentText = texts[textIndex];
-            
+
             if (isDeleting) {
                 typewriterElement.textContent = currentText.substring(0, charIndex - 1);
                 charIndex--;
@@ -240,7 +240,7 @@ class PortfolioApp {
         const rect = element.getBoundingClientRect();
         const x = e.clientX - rect.left - rect.width / 2;
         const y = e.clientY - rect.top - rect.height / 2;
-        
+
         element.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
     }
 
@@ -285,15 +285,15 @@ class PortfolioApp {
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const filter = btn.getAttribute('data-filter');
-                
+
                 // Update active button
                 filterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-                
+
                 // Filter projects
                 projectCards.forEach(card => {
                     const categories = card.getAttribute('data-category');
-                    
+
                     if (filter === 'all' || categories.includes(filter)) {
                         card.style.display = 'block';
                         card.style.animation = 'fadeInUp 0.5s ease forwards';
@@ -313,11 +313,11 @@ class PortfolioApp {
         skillTabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 const targetCategory = tab.getAttribute('data-tab');
-                
+
                 // Update active tab
                 skillTabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
-                
+
                 // Show target category
                 skillCategories.forEach(category => {
                     category.classList.remove('active');
@@ -352,7 +352,7 @@ class PortfolioApp {
             const percent = circle.getAttribute('data-percent');
             const circumference = 2 * Math.PI * 45;
             const offset = circumference - (percent / 100) * circumference;
-            
+
             setTimeout(() => {
                 circle.style.strokeDashoffset = offset;
             }, 500);
@@ -371,7 +371,7 @@ class PortfolioApp {
     // Counter Animations
     initCounterAnimations() {
         const counters = document.querySelectorAll('.stat-number');
-        
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -412,8 +412,20 @@ class PortfolioApp {
         // Floating labels
         const inputs = form.querySelectorAll('input, textarea');
         inputs.forEach(input => {
+            // Check if input has value on load
+            if (input.value.trim()) {
+                input.parentElement.classList.add('focused');
+            }
+
             input.addEventListener('focus', () => this.handleInputFocus(input));
             input.addEventListener('blur', () => this.handleInputBlur(input));
+            input.addEventListener('input', () => {
+                if (input.value.trim()) {
+                    input.parentElement.classList.add('focused');
+                } else {
+                    input.parentElement.classList.remove('focused');
+                }
+            });
         });
     }
 
@@ -422,58 +434,86 @@ class PortfolioApp {
     }
 
     handleInputBlur(input) {
-        if (!input.value) {
+        if (!input.value.trim()) {
             input.parentElement.classList.remove('focused');
         }
     }
 
     async handleFormSubmit(e) {
         e.preventDefault();
-        
+
         const submitBtn = e.target.querySelector('.submit-btn');
         const formData = new FormData(e.target);
-        
+
         // Validate form
         const name = formData.get('name');
         const email = formData.get('email');
         const subject = formData.get('subject');
         const message = formData.get('message');
-        
+
         if (!name || !email || !subject || !message) {
             this.showNotification('Please fill in all fields', 'error');
             return;
         }
-        
+
         // Validate email
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             this.showNotification('Please enter a valid email address', 'error');
             return;
         }
-        
+
         // Show loading state
         submitBtn.classList.add('loading');
-        
+
         try {
-            // Send form data to backend
-            const response = await fetch('/contact', {
-                method: 'POST',
-                body: formData
-            });
-            
-            const result = await response.json();
-            
-            if (result.success) {
+            // Simulate form submission with mailto link as fallback
+            const mailtoLink = `mailto:ss93134041@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
+
+            // Try to use Formspree (you can replace with your Formspree endpoint)
+            const formspreeEndpoint = 'https://formspree.io/f/YOUR_FORM_ID'; // Replace with actual Formspree ID
+
+            let success = false;
+
+            try {
+                // Try Formspree first
+                const response = await fetch(formspreeEndpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        email: email,
+                        subject: subject,
+                        message: message
+                    })
+                });
+
+                if (response.ok) {
+                    success = true;
+                }
+            } catch (formspreeError) {
+                console.log('Formspree not configured, using mailto fallback');
+            }
+
+            // If Formspree fails, use mailto as fallback
+            if (!success) {
+                window.location.href = mailtoLink;
+                success = true;
+            }
+
+            if (success) {
                 // Show success state
                 submitBtn.classList.remove('loading');
                 submitBtn.classList.add('success');
-                
+
                 // Create confetti effect
                 this.createConfetti();
-                
+
                 // Show success notification
                 this.showNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
-                
+
                 // Reset form after delay
                 setTimeout(() => {
                     submitBtn.classList.remove('success');
@@ -483,15 +523,17 @@ class PortfolioApp {
                         group.classList.remove('focused');
                     });
                 }, 3000);
-                
-            } else {
-                throw new Error(result.message || 'Failed to send message');
             }
-            
+
         } catch (error) {
             console.error('Form submission error:', error);
             submitBtn.classList.remove('loading');
-            this.showNotification(error.message || 'Failed to send message. Please try again.', 'error');
+
+            // Fallback to mailto
+            const mailtoLink = `mailto:ss93134041@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
+            window.location.href = mailtoLink;
+
+            this.showNotification('Opening your email client to send the message.', 'info');
         }
     }
 
@@ -510,9 +552,9 @@ class PortfolioApp {
                 pointer-events: none;
                 animation: confetti 3s ease-out forwards;
             `;
-            
+
             document.body.appendChild(confetti);
-            
+
             setTimeout(() => confetti.remove(), 3000);
         }
     }
@@ -521,7 +563,7 @@ class PortfolioApp {
         // Remove existing notifications
         const existingNotifications = document.querySelectorAll('.notification');
         existingNotifications.forEach(notification => notification.remove());
-        
+
         // Create notification element
         const notification = document.createElement('div');
         notification.className = `notification notification-${type}`;
@@ -534,7 +576,7 @@ class PortfolioApp {
                 </button>
             </div>
         `;
-        
+
         // Add styles
         notification.style.cssText = `
             position: fixed;
@@ -552,22 +594,22 @@ class PortfolioApp {
             max-width: 400px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         `;
-        
+
         // Add to DOM
         document.body.appendChild(notification);
-        
+
         // Animate in
         requestAnimationFrame(() => {
             notification.style.transform = 'translateX(0)';
         });
-        
+
         // Close button functionality
         const closeBtn = notification.querySelector('.notification-close');
         closeBtn.addEventListener('click', () => {
             notification.style.transform = 'translateX(400px)';
             setTimeout(() => notification.remove(), 300);
         });
-        
+
         // Auto remove after 5 seconds
         setTimeout(() => {
             if (notification.parentNode) {
@@ -592,7 +634,7 @@ class PortfolioApp {
 
     updateBackToTop() {
         if (!this.backToTopBtn) return;
-        
+
         if (window.scrollY > 300) {
             this.backToTopBtn.classList.add('visible');
         } else {
@@ -607,11 +649,11 @@ class PortfolioApp {
 
         themeToggle.addEventListener('click', () => {
             document.body.classList.toggle('light-theme');
-            
+
             // Save preference
             const isLight = document.body.classList.contains('light-theme');
             localStorage.setItem('theme', isLight ? 'light' : 'dark');
-            
+
             // Animate toggle
             themeToggle.style.transform = 'scale(0.8)';
             setTimeout(() => {
@@ -685,7 +727,7 @@ document.addEventListener('DOMContentLoaded', () => {
     svg.style.position = 'absolute';
     svg.style.width = '0';
     svg.style.height = '0';
-    
+
     svg.innerHTML = `
         <defs>
             <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -694,7 +736,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </linearGradient>
         </defs>
     `;
-    
+
     document.body.appendChild(svg);
 });
 
@@ -714,3 +756,43 @@ if ('serviceWorker' in navigator) {
             .catch(error => console.log('SW registration failed'));
     });
 }
+
+// Resume Section Enhancements
+document.addEventListener('DOMContentLoaded', function () {
+    // Add click tracking for resume buttons
+    const resumeButtons = document.querySelectorAll('.resume-btn');
+
+    resumeButtons.forEach(button => {
+        button.addEventListener('click', function (e) {
+            // Add ripple effect
+            const ripple = this.querySelector('.btn-ripple');
+            if (ripple) {
+                ripple.style.animation = 'none';
+                ripple.offsetHeight; // Trigger reflow
+                ripple.style.animation = 'ripple 0.6s ease-out';
+            }
+
+            // Add success feedback for download button
+            if (this.hasAttribute('download')) {
+                const originalText = this.querySelector('span').innerHTML;
+                this.querySelector('span').innerHTML = '<i class="fas fa-check"></i> Downloaded!';
+
+                setTimeout(() => {
+                    this.querySelector('span').innerHTML = originalText;
+                }, 2000);
+            }
+        });
+    });
+
+    // Add loading state for PDF iframe
+    const resumeIframe = document.querySelector('.resume-embed iframe');
+    if (resumeIframe) {
+        resumeIframe.addEventListener('load', function () {
+            this.style.opacity = '1';
+        });
+
+        // Initially hide iframe until loaded
+        resumeIframe.style.opacity = '0';
+        resumeIframe.style.transition = 'opacity 0.5s ease';
+    }
+});

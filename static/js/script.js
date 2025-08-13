@@ -433,29 +433,65 @@ class PortfolioApp {
         const submitBtn = e.target.querySelector('.submit-btn');
         const formData = new FormData(e.target);
         
+        // Validate form
+        const name = formData.get('name');
+        const email = formData.get('email');
+        const subject = formData.get('subject');
+        const message = formData.get('message');
+        
+        if (!name || !email || !subject || !message) {
+            this.showNotification('Please fill in all fields', 'error');
+            return;
+        }
+        
+        // Validate email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            this.showNotification('Please enter a valid email address', 'error');
+            return;
+        }
+        
         // Show loading state
         submitBtn.classList.add('loading');
         
         try {
-            // Simulate form submission
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            // Send form data to backend
+            const response = await fetch('/contact', {
+                method: 'POST',
+                body: formData
+            });
             
-            // Show success state
-            submitBtn.classList.remove('loading');
-            submitBtn.classList.add('success');
+            const result = await response.json();
             
-            // Create confetti effect
-            this.createConfetti();
-            
-            // Reset form after delay
-            setTimeout(() => {
-                submitBtn.classList.remove('success');
-                e.target.reset();
-            }, 3000);
+            if (result.success) {
+                // Show success state
+                submitBtn.classList.remove('loading');
+                submitBtn.classList.add('success');
+                
+                // Create confetti effect
+                this.createConfetti();
+                
+                // Show success notification
+                this.showNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
+                
+                // Reset form after delay
+                setTimeout(() => {
+                    submitBtn.classList.remove('success');
+                    e.target.reset();
+                    // Reset floating labels
+                    e.target.querySelectorAll('.form-group').forEach(group => {
+                        group.classList.remove('focused');
+                    });
+                }, 3000);
+                
+            } else {
+                throw new Error(result.message || 'Failed to send message');
+            }
             
         } catch (error) {
             console.error('Form submission error:', error);
             submitBtn.classList.remove('loading');
+            this.showNotification(error.message || 'Failed to send message. Please try again.', 'error');
         }
     }
 
@@ -479,6 +515,66 @@ class PortfolioApp {
             
             setTimeout(() => confetti.remove(), 3000);
         }
+    }
+
+    showNotification(message, type = 'info') {
+        // Remove existing notifications
+        const existingNotifications = document.querySelectorAll('.notification');
+        existingNotifications.forEach(notification => notification.remove());
+        
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.innerHTML = `
+            <div class="notification-content">
+                <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
+                <span>${message}</span>
+                <button class="notification-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        `;
+        
+        // Add styles
+        notification.style.cssText = `
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: ${type === 'success' ? 'rgba(76, 175, 80, 0.9)' : type === 'error' ? 'rgba(244, 67, 54, 0.9)' : 'rgba(33, 150, 243, 0.9)'};
+            backdrop-filter: blur(20px);
+            border: 1px solid ${type === 'success' ? 'rgba(76, 175, 80, 0.3)' : type === 'error' ? 'rgba(244, 67, 54, 0.3)' : 'rgba(33, 150, 243, 0.3)'};
+            border-radius: 15px;
+            padding: 1rem 1.5rem;
+            color: white;
+            z-index: 10001;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        `;
+        
+        // Add to DOM
+        document.body.appendChild(notification);
+        
+        // Animate in
+        requestAnimationFrame(() => {
+            notification.style.transform = 'translateX(0)';
+        });
+        
+        // Close button functionality
+        const closeBtn = notification.querySelector('.notification-close');
+        closeBtn.addEventListener('click', () => {
+            notification.style.transform = 'translateX(400px)';
+            setTimeout(() => notification.remove(), 300);
+        });
+        
+        // Auto remove after 5 seconds
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.style.transform = 'translateX(400px)';
+                setTimeout(() => notification.remove(), 300);
+            }
+        }, 5000);
     }
 
     // Back to Top

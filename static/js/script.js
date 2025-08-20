@@ -1,11 +1,30 @@
 // Modern Portfolio JavaScript with Glassmorphism & Cyberpunk Effects
 
+/*
+ * EmailJS Setup Instructions:
+ * 1. Go to https://www.emailjs.com/ and create a free account
+ * 2. Create an email service (Gmail, Outlook, etc.)
+ * 3. Create an email template with these variables:
+ *    - {{from_name}} - sender's name
+ *    - {{from_email}} - sender's email
+ *    - {{subject}} - email subject
+ *    - {{message}} - email message
+ *    - {{to_email}} - your email (ss93134041@gmail.com)
+ * 4. Replace the following placeholders in the code:
+ *    - YOUR_EMAILJS_PUBLIC_KEY (from EmailJS dashboard)
+ *    - YOUR_SERVICE_ID (from your email service)
+ *    - YOUR_TEMPLATE_ID (from your email template)
+ * 
+ * If EmailJS is not configured, the form will fallback to mailto links.
+ */
+
 class PortfolioApp {
     constructor() {
         this.init();
     }
 
     init() {
+        this.isMobile = this.detectMobile();
         this.setupEventListeners();
         this.initCustomCursor();
         this.initLoadingScreen();
@@ -21,18 +40,49 @@ class PortfolioApp {
         this.initBackToTop();
         this.initCounterAnimations();
         this.initThemeToggle();
+        this.optimizeForMobile();
+    }
+
+    detectMobile() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+            ('ontouchstart' in window) ||
+            (navigator.maxTouchPoints > 0);
     }
 
     setupEventListeners() {
         window.addEventListener('load', () => this.handlePageLoad());
-        window.addEventListener('scroll', () => this.handleScroll());
-        window.addEventListener('resize', () => this.handleResize());
-        document.addEventListener('mousemove', (e) => this.updateCursor(e));
+        window.addEventListener('scroll', this.debounce(() => this.handleScroll(), 16));
+        window.addEventListener('resize', this.debounce(() => this.handleResize(), 250));
+
+        if (!this.isMobile) {
+            document.addEventListener('mousemove', (e) => this.updateCursor(e));
+        }
         document.addEventListener('click', (e) => this.createRipple(e));
+    }
+
+    debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
     }
 
     // Custom Cursor
     initCustomCursor() {
+        // Hide cursor on mobile devices
+        if (this.isMobile) {
+            const cursor = document.querySelector('.cursor');
+            const cursorFollower = document.querySelector('.cursor-follower');
+            if (cursor) cursor.style.display = 'none';
+            if (cursorFollower) cursorFollower.style.display = 'none';
+            return;
+        }
+
         this.cursor = document.querySelector('.cursor');
         this.cursorFollower = document.querySelector('.cursor-follower');
 
@@ -230,6 +280,9 @@ class PortfolioApp {
 
     // Magnetic Buttons
     initMagneticButtons() {
+        // Disable magnetic effects on mobile for better performance
+        if (this.isMobile) return;
+
         document.querySelectorAll('.magnetic-btn').forEach(btn => {
             btn.addEventListener('mousemove', (e) => this.magneticEffect(e, btn));
             btn.addEventListener('mouseleave', () => this.resetMagnetic(btn));
@@ -443,98 +496,252 @@ class PortfolioApp {
         e.preventDefault();
 
         const submitBtn = e.target.querySelector('.submit-btn');
-        const formData = new FormData(e.target);
+        const form = e.target;
 
-        // Validate form
-        const name = formData.get('name');
-        const email = formData.get('email');
-        const subject = formData.get('subject');
-        const message = formData.get('message');
+        // Get form data
+        const formData = {
+            name: form.name.value.trim(),
+            email: form.email.value.trim(),
+            subject: form.subject.value.trim(),
+            message: form.message.value.trim()
+        };
 
-        if (!name || !email || !subject || !message) {
-            this.showNotification('Please fill in all fields', 'error');
-            return;
-        }
-
-        // Validate email
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            this.showNotification('Please enter a valid email address', 'error');
+        // Enhanced validation
+        const validation = this.validateForm(formData);
+        if (!validation.isValid) {
+            this.showNotification(validation.message, 'error');
+            this.highlightInvalidFields(form, validation.invalidFields);
             return;
         }
 
         // Show loading state
-        submitBtn.classList.add('loading');
+        this.setButtonState(submitBtn, 'loading');
 
         try {
-            // Simulate form submission with mailto link as fallback
-            const mailtoLink = `mailto:ss93134041@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
-
-            // Try to use Formspree (you can replace with your Formspree endpoint)
-            const formspreeEndpoint = 'https://formspree.io/f/YOUR_FORM_ID'; // Replace with actual Formspree ID
-
-            let success = false;
-
-            try {
-                // Try Formspree first
-                const response = await fetch(formspreeEndpoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        name: name,
-                        email: email,
-                        subject: subject,
-                        message: message
-                    })
-                });
-
-                if (response.ok) {
-                    success = true;
-                }
-            } catch (formspreeError) {
-                console.log('Formspree not configured, using mailto fallback');
+            // Initialize EmailJS if not already done
+            if (typeof emailjs !== 'undefined' && !this.emailjsInitialized) {
+                // Replace with your EmailJS public key
+                emailjs.init("YOUR_EMAILJS_PUBLIC_KEY");
+                this.emailjsInitialized = true;
             }
 
-            // If Formspree fails, use mailto as fallback
+            let success = false;
+            let errorMessage = '';
+
+            // Try EmailJS first
+            if (typeof emailjs !== 'undefined') {
+                try {
+                    const response = await emailjs.send(
+                        'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
+                        'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
+                        {
+                            from_name: formData.name,
+                            from_email: formData.email,
+                            subject: formData.subject,
+                            message: formData.message,
+                            to_email: 'ss93134041@gmail.com'
+                        }
+                    );
+
+                    if (response.status === 200) {
+                        success = true;
+                    }
+                } catch (emailjsError) {
+                    console.warn('EmailJS failed:', emailjsError);
+                    errorMessage = 'Email service temporarily unavailable. ';
+                }
+            }
+
+            // Fallback to mailto if EmailJS fails
             if (!success) {
-                window.location.href = mailtoLink;
-                success = true;
+                const mailtoLink = this.createMailtoLink(formData);
+
+                // Check if we can open mailto
+                try {
+                    window.location.href = mailtoLink;
+                    success = true;
+                    errorMessage = '';
+                } catch (mailtoError) {
+                    console.error('Mailto failed:', mailtoError);
+                    errorMessage = 'Unable to open email client. ';
+                }
             }
 
             if (success) {
-                // Show success state
-                submitBtn.classList.remove('loading');
-                submitBtn.classList.add('success');
-
-                // Create confetti effect
-                this.createConfetti();
-
-                // Show success notification
-                this.showNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
-
-                // Reset form after delay
-                setTimeout(() => {
-                    submitBtn.classList.remove('success');
-                    e.target.reset();
-                    // Reset floating labels
-                    e.target.querySelectorAll('.form-group').forEach(group => {
-                        group.classList.remove('focused');
-                    });
-                }, 3000);
+                this.handleFormSuccess(submitBtn, form);
+            } else {
+                throw new Error(errorMessage + 'Please try again or contact directly.');
             }
 
         } catch (error) {
             console.error('Form submission error:', error);
-            submitBtn.classList.remove('loading');
-
-            // Fallback to mailto
-            const mailtoLink = `mailto:ss93134041@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
-            window.location.href = mailtoLink;
-
-            this.showNotification('Opening your email client to send the message.', 'info');
+            this.handleFormError(submitBtn, error.message);
         }
+    }
+
+    validateForm(data) {
+        const invalidFields = [];
+        let message = '';
+
+        // Check required fields
+        if (!data.name) {
+            invalidFields.push('name');
+            message = 'Please enter your name';
+        } else if (data.name.length < 2) {
+            invalidFields.push('name');
+            message = 'Name must be at least 2 characters long';
+        }
+
+        if (!data.email) {
+            invalidFields.push('email');
+            message = 'Please enter your email address';
+        } else if (!this.isValidEmail(data.email)) {
+            invalidFields.push('email');
+            message = 'Please enter a valid email address';
+        }
+
+        if (!data.subject) {
+            invalidFields.push('subject');
+            message = 'Please enter a subject';
+        } else if (data.subject.length < 3) {
+            invalidFields.push('subject');
+            message = 'Subject must be at least 3 characters long';
+        }
+
+        if (!data.message) {
+            invalidFields.push('message');
+            message = 'Please enter your message';
+        } else if (data.message.length < 10) {
+            invalidFields.push('message');
+            message = 'Message must be at least 10 characters long';
+        }
+
+        // Check for potential spam
+        if (this.isSpamContent(data)) {
+            message = 'Message appears to be spam. Please write a genuine message.';
+            return { isValid: false, message, invalidFields: ['message'] };
+        }
+
+        return {
+            isValid: invalidFields.length === 0,
+            message,
+            invalidFields
+        };
+    }
+
+    isValidEmail(email) {
+        const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+        return emailRegex.test(email) && email.length <= 254;
+    }
+
+    isSpamContent(data) {
+        const spamKeywords = ['viagra', 'casino', 'lottery', 'winner', 'congratulations', 'click here', 'free money'];
+        const content = (data.name + ' ' + data.subject + ' ' + data.message).toLowerCase();
+
+        // Check for spam keywords
+        const hasSpamKeywords = spamKeywords.some(keyword => content.includes(keyword));
+
+        // Check for excessive links
+        const linkCount = (content.match(/http[s]?:\/\//g) || []).length;
+
+        // Check for excessive repetition
+        const words = content.split(' ');
+        const uniqueWords = new Set(words);
+        const repetitionRatio = words.length / uniqueWords.size;
+
+        return hasSpamKeywords || linkCount > 2 || repetitionRatio > 3;
+    }
+
+    highlightInvalidFields(form, invalidFields) {
+        // Remove previous error states
+        form.querySelectorAll('.form-group').forEach(group => {
+            group.classList.remove('error');
+        });
+
+        // Add error state to invalid fields
+        invalidFields.forEach(fieldName => {
+            const field = form.querySelector(`[name="${fieldName}"]`);
+            if (field) {
+                field.parentElement.classList.add('error');
+            }
+        });
+    }
+
+    createMailtoLink(data) {
+        const subject = encodeURIComponent(`Portfolio Contact: ${data.subject}`);
+        const body = encodeURIComponent(
+            `Name: ${data.name}\n` +
+            `Email: ${data.email}\n` +
+            `Subject: ${data.subject}\n\n` +
+            `Message:\n${data.message}\n\n` +
+            `---\nSent from portfolio contact form`
+        );
+        return `mailto:ss93134041@gmail.com?subject=${subject}&body=${body}`;
+    }
+
+    setButtonState(button, state) {
+        // Remove all states
+        button.classList.remove('loading', 'success', 'error');
+
+        // Add new state
+        if (state !== 'default') {
+            button.classList.add(state);
+        }
+
+        // Update button text and disable/enable
+        const textSpan = button.querySelector('.btn-text');
+        const loadingSpan = button.querySelector('.btn-loading');
+        const successSpan = button.querySelector('.btn-success');
+
+        switch (state) {
+            case 'loading':
+                button.disabled = true;
+                if (textSpan) textSpan.style.display = 'none';
+                if (loadingSpan) loadingSpan.style.display = 'flex';
+                if (successSpan) successSpan.style.display = 'none';
+                break;
+            case 'success':
+                button.disabled = true;
+                if (textSpan) textSpan.style.display = 'none';
+                if (loadingSpan) loadingSpan.style.display = 'none';
+                if (successSpan) successSpan.style.display = 'flex';
+                break;
+            case 'error':
+            case 'default':
+            default:
+                button.disabled = false;
+                if (textSpan) textSpan.style.display = 'flex';
+                if (loadingSpan) loadingSpan.style.display = 'none';
+                if (successSpan) successSpan.style.display = 'none';
+                break;
+        }
+    }
+
+    handleFormSuccess(submitBtn, form) {
+        this.setButtonState(submitBtn, 'success');
+        this.createConfetti();
+        this.showNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
+
+        // Reset form after delay
+        setTimeout(() => {
+            this.setButtonState(submitBtn, 'default');
+            form.reset();
+
+            // Reset floating labels
+            form.querySelectorAll('.form-group').forEach(group => {
+                group.classList.remove('focused', 'error');
+            });
+        }, 3000);
+    }
+
+    handleFormError(submitBtn, errorMessage) {
+        this.setButtonState(submitBtn, 'error');
+        this.showNotification(errorMessage || 'Failed to send message. Please try again.', 'error');
+
+        // Reset button state after delay
+        setTimeout(() => {
+            this.setButtonState(submitBtn, 'default');
+        }, 3000);
     }
 
     createConfetti() {
@@ -677,10 +884,34 @@ class PortfolioApp {
     }
 
     optimizeForMobile() {
+        if (!this.isMobile) return;
+
         // Reduce animations on mobile for better performance
-        if (window.innerWidth <= 768) {
-            document.documentElement.style.setProperty('--transition-smooth', 'all 0.2s ease');
-        }
+        document.documentElement.style.setProperty('--transition-smooth', 'all 0.2s ease');
+
+        // Disable heavy animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @media (max-width: 768px) {
+                .floating-shapes { display: none; }
+                .bg-gradient-mesh { opacity: 0.3; }
+                * { animation-duration: 0.3s !important; }
+                .aos-animate { animation: none !important; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Add touch-friendly improvements
+        document.body.classList.add('mobile-optimized');
+
+        // Improve touch targets
+        const buttons = document.querySelectorAll('button, .btn, .magnetic-btn');
+        buttons.forEach(btn => {
+            if (btn.offsetHeight < 44) {
+                btn.style.minHeight = '44px';
+                btn.style.padding = '12px 16px';
+            }
+        });
     }
 }
 

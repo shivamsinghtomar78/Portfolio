@@ -17,6 +17,7 @@ app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS', 'True').lower() == 'true'
 app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
 app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
 app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_DEFAULT_SENDER')
+app.config['MAIL_TIMEOUT'] = 10
 
 mail = Mail(app)
 
@@ -46,13 +47,14 @@ def contact():
         if not validate_email(email):
             return jsonify({'success': False, 'message': 'Invalid email format'}), 400
         
-        # Send email
-        msg = Message(
-            subject=f'Portfolio Contact: {subject}',
-            recipients=[os.getenv('MAIL_DEFAULT_SENDER')],
-            reply_to=email
-        )
-        msg.body = f"""New message from your portfolio:
+        # Send email with timeout
+        try:
+            msg = Message(
+                subject=f'Portfolio Contact: {subject}',
+                recipients=[os.getenv('MAIL_DEFAULT_SENDER')],
+                reply_to=email
+            )
+            msg.body = f"""New message from your portfolio:
 
 Name: {name}
 Email: {email}
@@ -62,8 +64,24 @@ Message:
 {message}
 
 Sent at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"""
-        
-        mail.send(msg)
+            
+            # Set shorter timeout for production
+            import signal
+            def timeout_handler(signum, frame):
+                raise TimeoutError("Email sending timeout")
+            
+            signal.signal(signal.SIGALRM, timeout_handler)
+            signal.alarm(10)  # 10 second timeout
+            
+            mail.send(msg)
+            signal.alarm(0)  # Cancel timeout
+            
+        except TimeoutError:
+            # Log message locally if email fails
+            with open('/tmp/contact_messages.txt', 'a') as f:
+                f.write(f"\n{datetime.now()}: {name} ({email}) - {subject}\n{message}\n---\n")
+            # Still return success to user
+            pass
         return jsonify({'success': True, 'message': 'Message sent successfully!'})
         
     except Exception as e:

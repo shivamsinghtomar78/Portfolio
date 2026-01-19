@@ -262,7 +262,7 @@ def contact():
                 except Exception as e:
                     app.logger.error(f"Email send failed: {type(e).__name__}: {e}")
         
-        threading.Thread(target=send_email_async, args=(app._get_current_object(),)).start()
+        threading.Thread(target=send_email_async, args=(app,)).start()
         
         return jsonify({'success': True, 'message': 'Message sent successfully!'})
         

@@ -6,9 +6,9 @@ import { Card, CardContent } from '@/components/ui/card';
 import { HeroCanvas } from '@/components/3d/HeroCanvas';
 
 const stats = [
-    { number: '8+', label: 'Projects', icon: Code },
-    { number: '8+', label: 'Technologies', icon: Brain },
-    { number: '50+', label: 'Commits', icon: Rocket },
+    { number: '12+', label: 'Projects', icon: Code },
+    { number: '15+', label: 'Technologies', icon: Brain },
+    { number: '100+', label: 'Commits', icon: Rocket },
 ];
 
 const containerVariants = {
@@ -68,7 +68,7 @@ export default function Home() {
                         variants={itemVariants}
                         className="text-xl md:text-2xl text-[var(--foreground-muted)] mb-4"
                     >
-                        AI Developer & Computer Science Student
+                        AI Developer | B.Tech CS (AI)
                     </motion.p>
 
                     {/* Description */}

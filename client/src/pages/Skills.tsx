@@ -12,9 +12,9 @@ const skillCategories = {
         skills: [
             { name: 'Python', level: 90, icon: '🐍' },
             { name: 'Java', level: 85, icon: '☕' },
+            { name: 'C++', level: 85, icon: '👾' },
             { name: 'JavaScript', level: 85, icon: '🟨' },
             { name: 'TypeScript', level: 80, icon: '🔷' },
-            { name: 'HTML/CSS', level: 95, icon: '🎨' },
             { name: 'SQL', level: 80, icon: '🗃️' },
         ],
     },
@@ -24,10 +24,10 @@ const skillCategories = {
         skills: [
             { name: 'VS Code', level: 90, icon: '💻' },
             { name: 'Git/GitHub', level: 90, icon: '🔀' },
-            { name: 'Docker', level: 75, icon: '🐳' },
-            { name: 'MongoDB', level: 80, icon: '🍃' },
             { name: 'Postman', level: 85, icon: '📮' },
-            { name: 'Figma', level: 70, icon: '🎨' },
+            { name: 'PyCharm', level: 85, icon: '🐍' },
+            { name: 'IntelliJ', level: 80, icon: '🏗️' },
+            { name: 'Linux', level: 75, icon: '🐧' },
         ],
     },
     frameworks: {
@@ -148,8 +148,8 @@ export default function Skills() {
                     <h2 className="text-2xl font-bold mb-8">Other Technologies</h2>
                     <div className="flex flex-wrap justify-center gap-3 max-w-3xl mx-auto">
                         {['NumPy', 'Pandas', 'Scikit-Learn', 'OpenCV', 'FAISS', 'Firebase', 'MySQL',
-                            'Redis', 'Vite', 'GSAP', 'Three.js', 'Chart.js', 'Hugging Face', 'OpenAI',
-                            'Google Gemini', 'Replicate', 'Vercel', 'Render', 'Railway'].map((tech, i) => (
+                            'Vite', 'Three.js', 'Google Gemini', 'YOLOv10', 'LangChain',
+                            'NLP', 'TF-IDF', 'Pickle', 'TMDB API', 'Indian Kanoon API'].map((tech, i) => (
                                 <motion.span
                                     key={tech}
                                     initial={{ opacity: 0, scale: 0.8 }}

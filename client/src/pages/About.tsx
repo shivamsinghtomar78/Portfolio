@@ -5,13 +5,22 @@ import { Card, CardContent } from '@/components/ui/card';
 
 const timeline = [
     {
-        type: 'education',
-        title: 'B.Tech in Computer Science (AI)',
-        organization: 'Maharaja Agrasen Institute of Technology',
-        date: 'Sep 2023 - May 2027',
-        location: 'New Delhi, India',
-        description: 'Specializing in Artificial Intelligence with coursework in Machine Learning, Deep Learning, and NLP.',
-        icon: GraduationCap,
+        type: 'experience',
+        title: 'Software Engineer Intern',
+        organization: 'Microsoft & SAP | TechSaksham',
+        date: 'Feb 2025 - Mar 2025',
+        location: 'Delhi, India',
+        description: 'Developed an AI-based project prototype under Microsoft & SAP-AICTE mentorship. Presented to industry experts at a regional showcase.',
+        icon: Briefcase,
+    },
+    {
+        type: 'experience',
+        title: 'Aspire Leaders Program 2025',
+        organization: 'Aspire Institute',
+        date: 'Jan 2025 - Present',
+        location: 'Delhi, India',
+        description: 'Selected for a prestigious global leadership program. Developed leadership skills through structured workshops and peer collaboration.',
+        icon: Briefcase,
     },
     {
         type: 'experience',
@@ -19,24 +28,24 @@ const timeline = [
         organization: 'Microsoft',
         date: 'Dec 2024 - Present',
         location: 'Remote',
-        description: 'Organizing tech events, workshops, and community building activities.',
+        description: 'Organizing tech events, workshops, and community building activities as an MLSA.',
         icon: Briefcase,
     },
     {
-        type: 'experience',
-        title: 'SAP Student Scholar',
-        organization: 'SAP',
-        date: '2024 - Present',
-        location: 'Remote',
-        description: 'Scholar in SAP\'s prestigious student program.',
-        icon: Briefcase,
+        type: 'education',
+        title: 'B.Tech in CS with Artificial Intelligence',
+        organization: 'Maharaja Agrasen Institute of Technology',
+        date: 'Sep 2023 - May 2027',
+        location: 'New Delhi, India',
+        description: 'Specializing in AI with advanced coursework in Data Structures, DBMS, and Machine Learning.',
+        icon: GraduationCap,
     },
 ];
 
 const achievements = [
-    { title: 'WinterHack2.0 Finalist', desc: 'Kanoon ki Pehchaan project', year: '2025' },
-    { title: 'Microsoft MLSA', desc: 'Learn Student Ambassador', year: '2024' },
-    { title: 'SAP Scholar', desc: 'Student Scholar Program', year: '2024' },
+    { title: 'Finalist – HackTU 6.0', desc: 'Developed real-time fake news detection extension', year: '2025' },
+    { title: 'Open Source Contributor', desc: 'GirlScript Summer of Code', year: '2024' },
+    { title: 'Certification: Microsoft & SAP', desc: 'AI: Transformative Learning', year: '2025' },
 ];
 
 export default function About() {
@@ -81,11 +90,11 @@ export default function About() {
                                 {/* Bio */}
                                 <div className="flex-1 text-center md:text-left">
                                     <h2 className="text-2xl font-bold mb-2">Hi, I'm Shivam Singh</h2>
-                                    <p className="text-[var(--primary)] font-medium mb-4">AI Developer & Computer Science Student</p>
+                                    <p className="text-[var(--primary)] font-medium mb-4">AI Developer & B.Tech CS (AI) Student</p>
                                     <p className="text-[var(--foreground-muted)] mb-6">
-                                        I'm a passionate developer specializing in AI/ML and full-stack development.
-                                        Currently pursuing B.Tech at MAIT with a focus on building innovative solutions
-                                        that bridge technology with real-world problems.
+                                        I'm a dedicated developer specializing in Artificial Intelligence and Machine Learning.
+                                        Currently pursuing my B.Tech at MAIT, I focus on building intelligent solutions
+                                        ranging from legal assistants to medical diagnostics using YOLOv10 and Google Gemini.
                                     </p>
                                     <div className="flex flex-wrap gap-3 justify-center md:justify-start">
                                         <Button size="sm">

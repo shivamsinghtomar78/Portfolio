@@ -97,13 +97,17 @@ export default function About() {
                                         ranging from legal assistants to medical diagnostics using YOLOv10 and Google Gemini.
                                     </p>
                                     <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                                        <Button size="sm">
-                                            <Download size={16} />
-                                            Download Resume
-                                        </Button>
-                                        <Button variant="secondary" size="sm">
-                                            View Projects
-                                        </Button>
+                                        <a href="/resume.pdf" download="Shivam_Singh_Resume.pdf">
+                                            <Button size="sm">
+                                                <Download size={16} />
+                                                Download Resume
+                                            </Button>
+                                        </a>
+                                        <Link to="/projects">
+                                            <Button variant="secondary" size="sm">
+                                                View Projects
+                                            </Button>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>

@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
 import { CursorTrail } from '@/components/ui/CursorTrail';
 import Home from '@/pages/Home';
 import About from '@/pages/About';
@@ -50,7 +49,6 @@ export default function App() {
                 <div className="flex-1">
                     <AnimatedRoutes />
                 </div>
-                <Footer />
                 <Analytics />
             </div>
         </Router>

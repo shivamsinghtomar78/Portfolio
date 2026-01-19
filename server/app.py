@@ -221,26 +221,27 @@ def contact():
         
         save_contact_message(contact_data)
         
-        def send_email_async():
-            try:
-                msg = MailMessage(
-                    subject=f'Portfolio Contact: {subject}',
-                    recipients=[os.getenv('MAIL_DEFAULT_SENDER')],
-                    reply_to=email
-                )
-                msg.body = f"From: {name} ({email})\nSubject: {subject}\n\n{message}"
-                mail.send(msg)
-                
-                ar = MailMessage(
-                    subject='Thanks for reaching out! - Shivam Singh',
-                    recipients=[email]
-                )
-                ar.body = f"Hi {name},\n\nThanks for your message regarding '{subject}'. I'll get back to you soon!\n\nBest,\nShivam"
-                mail.send(ar)
-            except Exception as e:
-                app.logger.error(f"Email error: {e}")
+        def send_email_async(app):
+            with app.app_context():
+                try:
+                    msg = MailMessage(
+                        subject=f'Portfolio Contact: {subject}',
+                        recipients=[os.getenv('MAIL_DEFAULT_SENDER')],
+                        reply_to=email
+                    )
+                    msg.body = f"From: {name} ({email})\nSubject: {subject}\n\n{message}"
+                    mail.send(msg)
+                    
+                    ar = MailMessage(
+                        subject='Thanks for reaching out! - Shivam Singh',
+                        recipients=[email]
+                    )
+                    ar.body = f"Hi {name},\n\nThanks for your message regarding '{subject}'. I'll get back to you soon!\n\nBest,\nShivam"
+                    mail.send(ar)
+                except Exception as e:
+                    app.logger.error(f"Email error: {e}")
         
-        threading.Thread(target=send_email_async).start()
+        threading.Thread(target=send_email_async, args=(app._get_current_object(),)).start()
         
         return jsonify({'success': True, 'message': 'Message sent successfully!'})
         

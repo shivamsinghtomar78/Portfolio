@@ -136,19 +136,22 @@ def log_page_view_analytics(response):
         request.method == 'GET' and 
         not request.path.startswith(('/assets', '/api', '/admin', '/favicon.ico', '/vite.svg'))):
         
-        def log_async():
+        # Capture request data synchronously (before losing context)
+        page_data = {
+            'page': request.endpoint or 'spa_route',
+            'path': request.path,
+            'referrer': request.referrer,
+            'user_agent': request.user_agent.string,
+            'ip_address': request.remote_addr
+        }
+        
+        def log_async(data):
             try:
-                log_page_view({
-                    'page': request.endpoint or 'spa_route',
-                    'path': request.path,
-                    'referrer': request.referrer,
-                    'user_agent': request.user_agent.string,
-                    'ip_address': request.remote_addr
-                })
+                log_page_view(data)
             except Exception as e:
                 app.logger.error(f"Failed to log page view: {e}")
         
-        thread = threading.Thread(target=log_async)
+        thread = threading.Thread(target=log_async, args=(page_data,))
         thread.start()
     
     return response

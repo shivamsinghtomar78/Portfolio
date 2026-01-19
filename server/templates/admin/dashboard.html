@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Shivam Singh Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0a0a23;
+            --surface-color: #1a1a2e;
+            --accent-cyan: #00d4ff;
+            --accent-purple: #bb86fc;
+            --text-color: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-color);
+            min-height: 100vh;
+            color: var(--text-color);
+        }
+
+        .admin-nav {
+            background: var(--surface-color);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-nav h1 {
+            font-size: 1.25rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .admin-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-left: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .admin-nav a:hover {
+            color: var(--accent-cyan);
+        }
+
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--surface-color);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .stat-icon.cyan {
+            background: rgba(0, 212, 255, 0.2);
+            color: var(--accent-cyan);
+        }
+
+        .stat-icon.purple {
+            background: rgba(187, 134, 252, 0.2);
+            color: var(--accent-purple);
+        }
+
+        .stat-icon.success {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+
+        .stat-icon.warning {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+        }
+
+        .stat-content h3 {
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .stat-content p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .section {
+            background: var(--surface-color);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section h2 i {
+            color: var(--accent-cyan);
+        }
+
+        .db-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .db-status.connected {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--success);
+        }
+
+        .db-status.disconnected {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: var(--danger);
+        }
+
+        .quick-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .quick-link {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            color: var(--text-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .quick-link:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-2px);
+        }
+
+        .quick-link i {
+            color: var(--accent-cyan);
+        }
+
+        .badge {
+            background: var(--danger);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="admin-nav">
+        <h1><i class="fas fa-cog"></i> Admin Dashboard</h1>
+        <div>
+            <a href="{{ url_for('admin.dashboard') }}"><i class="fas fa-home"></i> Dashboard</a>
+            <a href="{{ url_for('admin.messages') }}"><i class="fas fa-envelope"></i> Messages</a>
+            <a href="/"><i class="fas fa-external-link-alt"></i> View Site</a>
+            <a href="{{ url_for('admin.logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </nav>
+
+    <div class="admin-container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon cyan"><i class="fas fa-eye"></i></div>
+                <div class="stat-content">
+                    <h3>{{ analytics.total_page_views or 0 }}</h3>
+                    <p>Total Page Views</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon purple"><i class="fas fa-envelope"></i></div>
+                <div class="stat-content">
+                    <h3>{{ analytics.total_messages or 0 }}</h3>
+                    <p>Total Messages</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon warning"><i class="fas fa-envelope-open"></i></div>
+                <div class="stat-content">
+                    <h3>{{ unread_count or 0 }}</h3>
+                    <p>Unread Messages</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon success"><i class="fas fa-database"></i></div>
+                <div class="stat-content">
+                    <h3>{{ 'Connected' if db_stats.connected else 'Offline' }}</h3>
+                    <p>Database Status</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><i class="fas fa-database"></i> Database Info</h2>
+            {% if db_stats.connected %}
+            <div class="db-status connected">
+                <i class="fas fa-check-circle"></i>
+                Connected to <strong>{{ db_stats.database }}</strong>
+                | Collections: {{ db_stats.collections | join(', ') if db_stats.collections else 'None' }}
+            </div>
+            {% else %}
+            <div class="db-status disconnected">
+                <i class="fas fa-times-circle"></i>
+                Database not connected
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="section">
+            <h2><i class="fas fa-link"></i> Quick Links</h2>
+            <div class="quick-links">
+                <a href="{{ url_for('admin.messages') }}" class="quick-link">
+                    <i class="fas fa-envelope"></i>
+                    View Messages
+                    {% if unread_count %}<span class="badge">{{ unread_count }}</span>{% endif %}
+                </a>
+                <a href="/api/health" target="_blank" class="quick-link">
+                    <i class="fas fa-heartbeat"></i>
+                    Health Check
+                </a>
+                <a href="/api/projects" target="_blank" class="quick-link">
+                    <i class="fas fa-code"></i>
+                    Projects API
+                </a>
+                <a href="/api/stats" target="_blank" class="quick-link">
+                    <i class="fas fa-chart-bar"></i>
+                    Stats API
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages | Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0a0a23;
+            --surface-color: #1a1a2e;
+            --accent-cyan: #00d4ff;
+            --accent-purple: #bb86fc;
+            --text-color: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --success: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-color);
+            min-height: 100vh;
+            color: var(--text-color);
+        }
+
+        .admin-nav {
+            background: var(--surface-color);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-nav h1 {
+            font-size: 1.25rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .admin-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-left: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .admin-nav a:hover {
+            color: var(--accent-cyan);
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h2 {
+            font-size: 1.5rem;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            color: var(--text-color);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        .message-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message-card {
+            background: var(--surface-color);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .message-card:hover {
+            border-color: var(--accent-cyan);
+        }
+
+        .message-card.unread {
+            border-left: 3px solid var(--accent-cyan);
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .message-sender {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .message-email {
+            color: var(--accent-cyan);
+            font-size: 0.9rem;
+        }
+
+        .message-date {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .message-subject {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--accent-purple);
+        }
+
+        .message-content {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .message-actions {
+            margin-top: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            color: var(--text-color);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        .action-btn.success {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="admin-nav">
+        <h1><i class="fas fa-envelope"></i> Messages</h1>
+        <div>
+            <a href="{{ url_for('admin.dashboard') }}"><i class="fas fa-home"></i> Dashboard</a>
+            <a href="{{ url_for('admin.messages') }}"><i class="fas fa-envelope"></i> Messages</a>
+            <a href="/"><i class="fas fa-external-link-alt"></i> View Site</a>
+            <a href="{{ url_for('admin.logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </nav>
+
+    <div class="admin-container">
+        <div class="page-header">
+            <h2>Contact Messages</h2>
+            <div>
+                <a href="{{ url_for('admin.messages') }}"
+                    class="filter-btn {% if not unread_only %}active{% endif %}">All</a>
+                <a href="{{ url_for('admin.messages', unread='true') }}"
+                    class="filter-btn {% if unread_only %}active{% endif %}">Unread Only</a>
+            </div>
+        </div>
+
+        <div class="message-list">
+            {% if messages %}
+            {% for msg in messages %}
+            <div class="message-card {% if not msg.read %}unread{% endif %}">
+                <div class="message-header">
+                    <div>
+                        <div class="message-sender">{{ msg.name }}</div>
+                        <div class="message-email">{{ msg.email }}</div>
+                    </div>
+                    <div class="message-date">
+                        {{ msg.created_at.strftime('%b %d, %Y at %H:%M') if msg.created_at else 'Unknown' }}
+                    </div>
+                </div>
+                <div class="message-subject">{{ msg.subject }}</div>
+                <div class="message-content">{{ msg.message }}</div>
+                <div class="message-actions">
+                    {% if not msg.read %}
+                    <form action="{{ url_for('admin.mark_read', message_id=msg._id|string) }}" method="POST"
+                        style="display: inline;">
+                        <button type="submit" class="action-btn">
+                            <i class="fas fa-check"></i> Mark as Read
+                        </button>
+                    </form>
+                    {% else %}
+                    <span class="action-btn success">
+                        <i class="fas fa-check-circle"></i> Read
+                    </span>
+                    {% endif %}
+                    <a href="mailto:{{ msg.email }}?subject=Re: {{ msg.subject }}" class="action-btn">
+                        <i class="fas fa-reply"></i> Reply
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="empty-state">
+                <i class="fas fa-inbox"></i>
+                <h3>No messages found</h3>
+                <p>{% if unread_only %}No unread messages{% else %}No messages yet{% endif %}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+
+</html>

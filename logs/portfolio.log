@@ -1,0 +1,39 @@
+2026-01-18 15:02:00,503 - app - INFO - GET /api/health - 127.0.0.1
+2026-01-18 15:02:00,597 - app - INFO - GET /favicon.ico - 127.0.0.1
+2026-01-18 15:02:13,566 - app - INFO - GET /api/projects - 127.0.0.1
+2026-01-18 15:02:23,114 - app - INFO - GET /api/stats - 127.0.0.1
+2026-01-18 15:02:28,801 - app - INFO - GET /admin/login - 127.0.0.1
+2026-01-18 15:03:22,654 - app - INFO - GET /admin/login - 127.0.0.1
+2026-01-18 15:04:14,131 - app - INFO - GET /contact - 127.0.0.1
+2026-01-18 15:04:14,206 - app - ERROR - Failed to log page view: Working outside of request context.
+
+This typically means that you attempted to use functionality that needed
+an active HTTP request. Consult the documentation on testing for
+information about how to avoid this problem.
+2026-01-18 15:12:16,380 - app - INFO - GET /api/health - 127.0.0.1
+2026-01-18 15:13:15,620 - app - INFO - GET /api/health - 127.0.0.1
+2026-01-18 15:13:28,718 - app - INFO - GET /admin/login - 127.0.0.1
+2026-01-18 15:14:56,324 - app - INFO - POST /admin/login - 127.0.0.1
+2026-01-18 15:14:56,487 - app - INFO - GET /admin/dashboard - 127.0.0.1
+2026-01-18 18:38:44,922 - app - INFO - GET / - 127.0.0.1
+2026-01-18 18:38:45,213 - app - ERROR - Failed to log page view: Working outside of request context.
+
+This typically means that you attempted to use functionality that needed
+an active HTTP request. Consult the documentation on testing for
+information about how to avoid this problem.
+2026-01-18 18:38:45,241 - app - INFO - GET / - 127.0.0.1
+2026-01-18 22:50:15,912 - app - INFO - GET / - 127.0.0.1
+2026-01-18 22:50:24,604 - app - INFO - GET /projects - 127.0.0.1
+2026-01-18 22:50:31,617 - app - INFO - GET /api/health - 127.0.0.1
+2026-01-18 22:50:37,625 - app - INFO - GET /admin/login - 127.0.0.1
+2026-01-18 22:50:45,929 - app - INFO - GET / - 127.0.0.1
+2026-01-18 22:51:19,041 - app - INFO - GET /projects - 127.0.0.1
+2026-01-18 22:51:28,539 - app - INFO - GET / - 127.0.0.1
+2026-01-18 22:57:17,300 - app - INFO - GET /projects - 127.0.0.1
+2026-01-18 22:57:17,565 - app - ERROR - Failed to log page view: Working outside of request context.
+
+This typically means that you attempted to use functionality that needed
+an active HTTP request. Consult the documentation on testing for
+information about how to avoid this problem.
+2026-01-18 23:22:33,018 - app - INFO - GET /projects - 127.0.0.1
+2026-01-18 23:22:46,112 - app - INFO - GET / - 127.0.0.1

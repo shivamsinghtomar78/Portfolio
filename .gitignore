@@ -1,5 +1,11 @@
-.env
-contact_messages.txt
-__pycache__/
-*.pyc
+# Decoupled Structure
+server/__pycache__/
+server/logs/
+server/.env
+client/node_modules/
+client/dist/
+client/.env.production
+.vscode/
 .DS_Store
+*.pyc
+contact_messages.txt

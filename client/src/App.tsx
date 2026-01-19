@@ -8,6 +8,7 @@ import About from '@/pages/About';
 import Projects from '@/pages/Projects';
 import Skills from '@/pages/Skills';
 import Contact from '@/pages/Contact';
+import { Analytics } from '@vercel/analytics/react';
 
 function AnimatedRoutes() {
     const location = useLocation();
@@ -50,6 +51,7 @@ export default function App() {
                     <AnimatedRoutes />
                 </div>
                 <Footer />
+                <Analytics />
             </div>
         </Router>
     );

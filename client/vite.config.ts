@@ -18,7 +18,7 @@ export default defineConfig({
         },
     },
     build: {
-        outDir: '../server/static/react',
+        outDir: 'dist',
         emptyOutDir: true,
         // Fix #7: Minification settings
         minify: 'terser',

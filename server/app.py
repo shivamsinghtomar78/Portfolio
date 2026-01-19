@@ -223,23 +223,37 @@ def contact():
         
         def send_email_async(app):
             with app.app_context():
+                # Pre-flight check for mail configuration
+                mail_server = os.getenv('MAIL_SERVER')
+                mail_username = os.getenv('MAIL_USERNAME')
+                mail_password = os.getenv('MAIL_PASSWORD')
+                mail_sender = os.getenv('MAIL_DEFAULT_SENDER')
+                
+                if not all([mail_server, mail_username, mail_password, mail_sender]):
+                    app.logger.warning(f"Email skipped: Missing mail config (server={bool(mail_server)}, user={bool(mail_username)}, pass={bool(mail_password)}, sender={bool(mail_sender)})")
+                    return
+                
                 try:
+                    # Notification to owner
                     msg = MailMessage(
                         subject=f'Portfolio Contact: {subject}',
-                        recipients=[os.getenv('MAIL_DEFAULT_SENDER')],
+                        recipients=[mail_sender],
                         reply_to=email
                     )
                     msg.body = f"From: {name} ({email})\nSubject: {subject}\n\n{message}"
                     mail.send(msg)
+                    app.logger.info(f"Email sent to owner from {email}")
                     
+                    # Auto-reply to visitor
                     ar = MailMessage(
                         subject='Thanks for reaching out! - Shivam Singh',
                         recipients=[email]
                     )
                     ar.body = f"Hi {name},\n\nThanks for your message regarding '{subject}'. I'll get back to you soon!\n\nBest,\nShivam"
                     mail.send(ar)
+                    app.logger.info(f"Auto-reply sent to {email}")
                 except Exception as e:
-                    app.logger.error(f"Email error: {e}")
+                    app.logger.error(f"Email send failed: {type(e).__name__}: {e}")
         
         threading.Thread(target=send_email_async, args=(app._get_current_object(),)).start()
         

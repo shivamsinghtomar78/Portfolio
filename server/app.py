@@ -222,7 +222,11 @@ def contact():
             'user_agent': request.user_agent.string
         }
         
-        save_contact_message(contact_data)
+        # Database save (non-blocking failure)
+        try:
+            save_contact_message(contact_data)
+        except Exception as db_err:
+            app.logger.warning(f"Failed to save contact to DB: {db_err}")
         
         def send_email_async(app):
             with app.app_context():

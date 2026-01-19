@@ -2,11 +2,11 @@
     "rewrites": [
         {
             "source": "/api/(.*)",
-            "destination": "https://your-render-backend-url.onrender.com/api/$1"
+            "destination": "https://portfolio-ya7e.onrender.com/api/$1"
         },
         {
             "source": "/contact",
-            "destination": "https://your-render-backend-url.onrender.com/contact"
+            "destination": "https://portfolio-ya7e.onrender.com/contact"
         },
         {
             "source": "/(.*)",
